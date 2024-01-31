@@ -11,7 +11,25 @@ class FIFOCache(BaseCaching):
     #    super().__init__()
 
     def put(self, key, item):
-        """Add an item to the cache storage, with regards to FIFO."""
+        """Add an item to the cache storage, with regards to FIFO.
+
+        Keys should be of similar types, eg. int, float and bool
+        or only str. This is because the cache is sorted before printing
+        using the builtin sorted function and thus cannot compare
+        different types."""
+
+        if not type(key) in [bool, float, int, str, tuple]:
+            return
+
+        # validate that key type can be compared with other key types
+        try:
+            if len(self.cache_data) > 0:
+                first_key = list(self.cache_data)[0]
+                comparison_possible = key > first_key
+        except TypeError:
+            # the key cannot be compared with other keys as it is likely
+            # a different type, This is the type of the current cache type(...)
+            return
 
         if key and item:
             cache_size = len(self.cache_data)

@@ -52,22 +52,22 @@ const jobs = [
 const queue = kue.createQueue();
 
 for (const job of jobs) {
-  const job = queue.create("push_notification_code_2", job).save((err) => {
+  const kueJob = queue.create("push_notification_code_2", job).save((err) => {
     if (err) {
       console.log(`error: ${err}`);
     } else {
-      console.log(`Notification job created: ${job.id}`);
+      console.log(`Notification job created: ${kueJob.id}`);
     }
   });
 
-  job
-    .on("completed", () => {
-      console.log(`Notification job ${job.id} completed`);
-    })
-    .on("failed", () => {
-      console.log(`Notification job ${job.id} failed`);
-    })
+  kueJob
     .on("progress", (progress) => {
-      console.log(`Notification job ${job.id} ${progress}% complete`);
+      console.log(`Notification job #${kueJob.id} ${progress}% complete`);
+    })
+    .on("complete", () => {
+      console.log(`Notification job #${kueJob.id} completed`);
+    })
+    .on("failed", (error) => {
+      console.log(`Notification job #${kueJob.id} failed: ${error}`);
     });
 }

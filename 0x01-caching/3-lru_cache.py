@@ -50,7 +50,6 @@ class LRUCache(BaseCaching):
 
             # adding the key to the back indicates it is the most recently used
             self.recently_used_keys.append(key)
-            print('(put) Recently used keys:', self.recently_used_keys)
 
     def get(self, key):
         """ Retrieve the item linked to the key, in the cache.
@@ -65,7 +64,6 @@ class LRUCache(BaseCaching):
             idx = self.recently_used_keys.index(key)
             self.recently_used_keys.pop(idx)
             self.recently_used_keys.append(key)
-            print('(get) Recently used keys:', self.recently_used_keys)
 
             return item
 

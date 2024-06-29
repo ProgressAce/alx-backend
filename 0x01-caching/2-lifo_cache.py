@@ -27,7 +27,7 @@ class LIFOCache(BaseCaching):
                 print(f'DISCARD: {self.last_cache_key}')
                 self.cache_data.pop(self.last_cache_key)
 
-            # update last_cache_key only if the item is to be added and not updated
+            # update last_cache_key only if the item is added and not updated
             # (given key is non-existent in the cache)
             if self.cache_data.get(key) is None:
                 self.last_cache_key = key
